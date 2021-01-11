@@ -115,6 +115,7 @@ int main(int argc, char *argv[]){
     for (int i = 0; i < M; i++){
 	for (int j = 0; j < N; j++){
 	    write(fd, result[i][j], strlen(result[i][j]));
+	    write(fd, "\n", 1);
 	}
 	write(fd, "===\n", 4);
     }

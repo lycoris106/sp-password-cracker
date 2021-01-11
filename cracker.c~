@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){
     N = atoi(argv[3]);
     M = atoi(argv[4]);
     outfile = argv[5];
-    printf("%s\n%s\n%s\n", prefix, Goal, outfile);
+    //printf("%s\n%s\n%s\n", prefix, Goal, outfile);
     threadNo = 0;
     
     preLen = strlen(prefix);
