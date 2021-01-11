@@ -28,16 +28,19 @@ int DFS_find(unsigned char *cur, int layer, int curLayer, int len, int rank, int
 	char cry[MD5_DIGEST_LENGTH*2+1];
 	int i = 0;
 	int loop = 0;
-	while (loop < MD5_DIGEST_LENGTH && crypted[loop] != '\0'){
-	    sprintf(cry+i, "%02X", crypted[loop]);
+	while (loop < MD5_DIGEST_LENGTH){
+	    sprintf(cry+i, "%02x", crypted[loop]);
 	    loop++;
 	    i += 2;
 	}
-	cry[MD5_DIGEST_LENGTH] = '\0';
+	cry[MD5_DIGEST_LENGTH*2] = '\0';
 	//printf("%s\n", cry);
 	if (strncmp(cry, Goal, rank+1) == 0){
 	    strcpy(result[ID][rank], cur);
+#ifdef DEBUG
+	    printf("%s\n", crypted);
 	    printf("%s\n", cry);
+#endif
 	    return 1;
 	}
 	else{
@@ -86,14 +89,14 @@ int main(int argc, char *argv[]){
     N = atoi(argv[3]);
     M = atoi(argv[4]);
     outfile = argv[5];
-    printf("%s\n%s\n%s\n", prefix, Goal, outfile);
+    //printf("%s\n%s\n%s\n", prefix, Goal, outfile);
     threadNo = 0;
     
     preLen = strlen(prefix);
 
     unsigned char firstChr[10];
     for (int i = 0; i < M; i++){
-	firstChr[i] = (unsigned char)65+i;
+	firstChr[i] = (unsigned char)68+i;
 	pthread_create(&tidp[i], NULL, thread_find, &firstChr[i]);
     }
     for (int i = 0; i < M; i++){
@@ -115,6 +118,7 @@ int main(int argc, char *argv[]){
 	}
 	write(fd, "===\n", 4);
     }
+    close(fd);
 #endif
 
     return 0;
